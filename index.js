@@ -4,4 +4,14 @@ function reverseString(string) {
   let concateReverseListOfChar = reverseListOfCharactor.join("");
   return concateReverseListOfChar;
 }
-console.log(reverseString("hellow"));
+
+function isPalindrome(reverseStringChar) {
+  let isPalindromeString = reverseString(reverseStringChar);
+  if (isPalindromeString === reverseStringChar) {
+    return true;
+  } else {
+    return false;
+  }
+}
+console.log(isPalindrome("hellow"));
+console.log(isPalindrome("racecar"));
