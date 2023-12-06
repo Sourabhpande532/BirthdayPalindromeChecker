@@ -23,4 +23,4 @@ It web app, palindrome check is performed on your birthdate to determine if it i
 ---
 
 ## Preview
-![Website Preview](./images/palindrome.png
+![Website Preview](./images/palindrome.png)
