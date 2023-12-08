@@ -17,11 +17,12 @@ function isPalindrome(reverseStringChar) {
 console.log(isPalindrome("racecar"));
 
 const date = {
-  day: 20,
-  month: 2,
-  year: 2020,
+  day: 31,
+  month: 12,
+  year: 2021,
 };
 
+/* Convert Date Number to string */
 function convertDateNumberToString(date) {
   let stringFormateDate = { day: "", month: "", year: "" };
   date.day < 10
@@ -36,6 +37,7 @@ function convertDateNumberToString(date) {
 
 console.log(convertDateNumberToString(date));
 
+/* Structure of all date formate */
 function getAllDateFormate(date) {
   let dateString = convertDateNumberToString(date);
   let ddmmyyyy = dateString.day + dateString.month + dateString.year;
@@ -48,17 +50,77 @@ function getAllDateFormate(date) {
 }
 console.log(getAllDateFormate(date));
 
-
-function checkIsPalindromeForAllDateFormats(date){
-let listOfPalindromDate = getAllDateFormate(date);
-let isThis = false;
-for(let i = 0; i<listOfPalindromDate.length; i++){
-  if(isPalindrome(listOfPalindromDate[i])){
-    isThis = true;
-    break;
+/* check is isPalindrome date or not like: rececar === racecar if true o.w false */
+function checkIsPalindromeForAllDateFormats(date) {
+  let listOfPalindromDate = getAllDateFormate(date);
+  let isThis = false;
+  for (let i = 0; i < listOfPalindromDate.length; i++) {
+    if (isPalindrome(listOfPalindromDate[i])) {
+      isThis = true;
+      break;
+    }
   }
-}
-return isThis;
+  return isThis;
 }
 
 console.log(checkIsPalindromeForAllDateFormats(date));
+
+/* find the next palindrome date, also how many days are in between */
+
+/* check Leap year weather is or not */
+function isLeapYear(year) {
+  if (year % 400 === 0) {
+    return true;
+  }
+  if (year % 100 === 0) {
+    return false;
+  }
+  if (year % 4 === 0) {
+    return true;
+  }
+  return false;
+}
+
+// console.log(isLeapYear(2016));
+
+/* Let check next date from now, e.g tommarow */
+function getNextDate(date) {
+  let day = date.day + 1;
+  let month = date.month;
+  let year = date.year;
+  let lastDaysInMonth = [30, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  /* Check for Feb  */
+  if (month === 2) {
+    if (isLeapYear(year)) {
+      if (day > 29) {
+        day = 1;
+        month++;
+      }
+    } else {
+      if (day > 28) {
+        day = 1;
+        month++;
+      }
+    }
+    /* check for remaining month  */
+  } else {
+    if (day > lastDaysInMonth[month - 1]) {
+      day = 1;
+      month++;
+    }
+  }
+  /* check for month if cross 12 to 13 */
+  if (month > 12) {
+    month = 1;
+    year++;
+  }
+
+  return {
+    day: day,
+    month: month,
+    year: year,
+  };
+}
+
+console.log(getNextDate(date));
