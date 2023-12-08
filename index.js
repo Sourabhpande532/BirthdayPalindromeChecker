@@ -80,7 +80,6 @@ function isLeapYear(year) {
   }
   return false;
 }
-
 // console.log(isLeapYear(2016));
 
 /* Let check next date from now, e.g tommarow */
@@ -124,3 +123,23 @@ function getNextDate(date) {
 }
 
 console.log(getNextDate(date));
+
+/* Now,time has come to know know next palindrome date & how far it is from now */
+function getNextPalindromeDateFar(date) {
+  let count = 0;
+  let nextDate = getNextDate(date);
+  while (1) {
+    count++;
+    let isNextPalindromDate =
+      checkIsPalindromeForAllDateFormats(nextDate);
+    if (isNextPalindromDate) {
+      break;
+    }
+    nextDate = getNextDate(nextDate);
+    // console.log(nextDate);
+  }
+  return [count, nextDate];
+}
+console.log(getNextPalindromeDateFar(date));
+
+
