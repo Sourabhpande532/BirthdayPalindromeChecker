@@ -142,4 +142,31 @@ function getNextPalindromeDateFar(date) {
 }
 console.log(getNextPalindromeDateFar(date));
 
+let userBirthdayDay = document.querySelector("#birthday-input");
+let showButton = document.querySelector("#show-button");
+let result = document.querySelector("#result");
+
+function clickDateHandler(){
+  let birthdayDateVal = userBirthdayDay.value;
+  if(birthdayDateVal !== ""){
+  let splitBirthdayDate = birthdayDateVal.split("-");
+  
+  let date = {
+    day:Number(splitBirthdayDate[2]),
+    month:Number(splitBirthdayDate[1]),
+    year:Number(splitBirthdayDate[0])
+  }
+  // console.log(date);
+  let isPalindrome = checkIsPalindromeForAllDateFormats(date);
+  if(isPalindrome){
+  result.textContent = "Yehh! You'r birthday is Palindrom 😍😍😍 ENJOY....🎊"
+  }else{
+    let [count,nextDate] = getNextPalindromeDateFar(date);
+    result.textContent = `Oh!Sadly 😔😔 No,The Next palindrome Date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count} days.`
+  }
+  }
+
+  
+}
+showButton.addEventListener("click",clickDateHandler);
 
