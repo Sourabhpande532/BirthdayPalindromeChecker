@@ -130,8 +130,7 @@ function getNextPalindromeDateFar(date) {
   let nextDate = getNextDate(date);
   while (1) {
     count++;
-    let isNextPalindromDate =
-      checkIsPalindromeForAllDateFormats(nextDate);
+    let isNextPalindromDate = checkIsPalindromeForAllDateFormats(nextDate);
     if (isNextPalindromDate) {
       break;
     }
@@ -142,31 +141,70 @@ function getNextPalindromeDateFar(date) {
 }
 console.log(getNextPalindromeDateFar(date));
 
+/* BONUS EX. */
+function getPreviousDate(date) {
+  let day = date.day - 1;
+  let month = date.month;
+  let year = date.year;
+  let daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  if (day === 0) {
+    month--;
+    if (month === 0) {
+      month = 12;
+      year--;
+    }
+    day = daysInMonth[month - 1];
+  }
+
+  return {
+    day: day,
+    month: month,
+    year: year,
+  };
+}
+
+function getPreviousPalindromeDate(date) {
+  let ctr = 0;
+  let previousDate = getPreviousDate(date);
+
+  while (1) {
+    ctr++;
+    let isPalindromeDate = checkIsPalindromeForAllDateFormats(previousDate);
+    if (isPalindromeDate) {
+      break;
+    }
+    previousDate = getPreviousDate(previousDate);
+  }
+
+  return [ctr, previousDate];
+}
+
 let userBirthdayDay = document.querySelector("#birthday-input");
 let showButton = document.querySelector("#show-button");
 let result = document.querySelector("#result");
 
-function clickDateHandler(){
+function clickDateHandler() {
   let birthdayDateVal = userBirthdayDay.value;
-  if(birthdayDateVal !== ""){
-  let splitBirthdayDate = birthdayDateVal.split("-");
-  
-  let date = {
-    day:Number(splitBirthdayDate[2]),
-    month:Number(splitBirthdayDate[1]),
-    year:Number(splitBirthdayDate[0])
-  }
-  // console.log(date);
-  let isPalindrome = checkIsPalindromeForAllDateFormats(date);
-  if(isPalindrome){
-  result.textContent = "Yehh! You'r birthday is Palindrom 😍😍😍 ENJOY....🎊"
-  }else{
-    let [count,nextDate] = getNextPalindromeDateFar(date);
-    result.textContent = `Oh!Sadly 😔😔 No,The Next palindrome Date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count} days.`
-  }
-  }
+  if (birthdayDateVal !== "") {
+    let splitBirthdayDate = birthdayDateVal.split("-");
 
-  
+    let date = {
+      day: Number(splitBirthdayDate[2]),
+      month: Number(splitBirthdayDate[1]),
+      year: Number(splitBirthdayDate[0]),
+    };
+    // console.log(date);
+    let isPalindrome = checkIsPalindromeForAllDateFormats(date);
+    if (isPalindrome) {
+      result.textContent =
+        "Yehh! You'r birthday is Palindrom 😍😍😍 ENJOY....🎊";
+    } else {
+      let [count, previousDate] = getPreviousPalindromeDate(date);
+      let [countNextDate, nextDateLater] = getNextPalindromeDateFar(date);
+
+      result.textContent = `Oh!Sadly 😔😔 No,Your Previous palindrome Date is ${previousDate.day}-${previousDate.month}-${previousDate.year}, you missed it by ${count} days! & Unfortunately 😔😔 Your Next palindrome Date is ${nextDateLater.day}-${nextDateLater.month}-${nextDateLater.year}, you missed as well by ${countNextDate} days !. SO SAD BETTER LUCK NEXT TIME 🫡`;
+    }
+  }
 }
-showButton.addEventListener("click",clickDateHandler);
-
+showButton.addEventListener("click", clickDateHandler);
